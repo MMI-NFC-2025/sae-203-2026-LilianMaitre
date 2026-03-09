@@ -1,0 +1,233 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout titre="Contact">
+    <section
+        class="relative min-h-[500px] w-full flex flex-col justify-end pb-12 px-6 text-center overflow-hidden font-roboto"
+    >
+        <img
+            src="/src/assets/img/hero_contact.avif"
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover -z-20"
+        />
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-[#020618] via-[#020618]/40 to-transparent -z-10"
+        >
+        </div>
+
+        <div class="relative z-10 mb-8">
+            <h1 class="text-7xl font-bold tracking-tighter mb-4 uppercase">
+                <span
+                    class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+                >
+                    Contact
+                </span>
+            </h1>
+            <p class="text-white text-lg max-w-md mx-auto opacity-90">
+                Une question ? N'hésitez pas à nous contacter
+            </p>
+        </div>
+    </section>
+
+    <section class="px-6 py-16 max-w-2xl mx-auto bg-[#020618]">
+        <h2 class="text-[#C27AFF] text-[40px] font-bold mb-10 leading-tight">
+            Envoyez-nous un <br /> message
+        </h2>
+
+        <form action="#" method="POST" class="flex flex-col gap-8">
+            <div class="flex flex-col gap-3">
+                <label for="nom" class="text-[#90A1B9] text-sm font-medium ml-1"
+                    >Nom complet</label
+                >
+                <input
+                    type="text"
+                    id="nom"
+                    placeholder="Votre nom"
+                    class="w-full h-14 bg-[#1E293B] rounded-xl px-6 text-white border border-white/5 focus:border-[#C27AFF] outline-none transition-colors placeholder:text-white/20"
+                />
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <label
+                    for="email"
+                    class="text-[#90A1B9] text-sm font-medium ml-1">Email</label
+                >
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="votre@email.com"
+                    class="w-full h-14 bg-[#1E293B] rounded-xl px-6 text-white border border-white/5 focus:border-[#C27AFF] outline-none transition-colors placeholder:text-white/20"
+                />
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <label
+                    for="sujet"
+                    class="text-[#90A1B9] text-sm font-medium ml-1">Sujet</label
+                >
+                <input
+                    type="text"
+                    id="sujet"
+                    class="w-full h-14 bg-[#1E293B] rounded-xl px-6 text-white border border-white/5 focus:border-[#C27AFF] outline-none transition-colors"
+                />
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <label
+                    for="message"
+                    class="text-[#90A1B9] text-sm font-medium ml-1"
+                    >Message</label
+                >
+                <textarea
+                    id="message"
+                    rows="6"
+                    placeholder="Votre message..."
+                    class="w-full bg-[#1E293B] rounded-xl p-6 text-white border border-white/5 focus:border-[#C27AFF] outline-none transition-colors placeholder:text-white/20 resize-none"
+                ></textarea>
+            </div>
+
+            <button type="submit" class="download-btn mt-4">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-5 h-5 -rotate-45"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                    ></path>
+                </svg>
+                Envoyer le message
+            </button>
+        </form>
+    </section>
+    <section class="px-6 pb-24 max-w-2xl mx-auto flex flex-col gap-8">
+        <h2
+            class="text-[#C27AFF] text-[40px] font-bold leading-tight mb-4 font-roboto"
+        >
+            Informations de <br /> contact
+        </h2>
+
+        <div class="flex flex-col gap-6">
+            <div
+                class="bg-[#0F172B]/50 border border-white/5 p-8 rounded-[2rem] flex items-start gap-6"
+            >
+                <img
+                    src="/src/assets/icons/mail.svg"
+                    alt=""
+                    class="w-6 h-6 flex-shrink-0 mt-1"
+                />
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-1">Email</h3>
+                    <p class="text-[#90A1B9] text-lg leading-snug">
+                        contact@lumimix-festival.fr
+                    </p>
+                    <p class="text-[#566882] text-sm mt-1">Réponse sous 48h</p>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0F172B]/50 border border-white/5 p-8 rounded-[2rem] flex items-start gap-6"
+            >
+                <img
+                    src="/src/assets/icons/tel.svg"
+                    alt=""
+                    class="w-6 h-6 flex-shrink-0 mt-1"
+                />
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-1">
+                        Téléphone
+                    </h3>
+                    <p class="text-[#90A1B9] text-lg leading-snug">
+                        +33 3 84 22 00 00
+                    </p>
+                    <p class="text-[#566882] text-sm mt-1">Lun-Ven : 9h-18h</p>
+                </div>
+            </div>
+
+            <div
+                class="bg-[#0F172B]/50 border border-white/5 p-8 rounded-[2rem] flex items-start gap-6"
+            >
+                <img
+                    src="/src/assets/icons/locbleu.svg"
+                    alt=""
+                    class="w-7 h-6 flex-shrink-0 mt-1"
+                />
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-1">Adresse</h3>
+                    <p class="text-[#90A1B9] text-lg leading-relaxed">
+                        Lumimix Festival <br />
+                        Base de loisirs du Malsaucy <br />
+                        90300 Sermamagny, France
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="mt-8">
+        <h2 class="text-white text-[32px] font-bold mb-8">Suivez-nous</h2>
+        <div class="flex gap-4">
+            {
+                ["facebook", "instagram", "twitter", "youtube"].map(
+                    (social) => (
+                        <a
+                            href="#"
+                            class="w-16 h-16 bg-[#111827]/50 border border-white/5 rounded-2xl flex items-center justify-center hover:bg-purple-900/20 transition-colors group"
+                        >
+                            <img
+                                src={`/assets/icons/${social}.svg`}
+                                alt={social}
+                                class="w-8 h-8 opacity-70 group-hover:opacity-100 transition-opacity"
+                            />
+                        </a>
+                    ),
+                )
+            }
+        </div>
+    </div>
+
+    <div
+        class="bg-gradient-to-br from-purple-900/20 to-pink-900/10 border border-white/5 p-8 rounded-[2rem] mt-4"
+    >
+        <p class="text-[#90A1B9] text-lg leading-relaxed text-center">
+            Pour toute demande de partenariat ou de collaboration, merci
+            d'utiliser l'adresse : <br />
+            <span class="text-[#C27AFF] font-medium italic"
+                >partenariats@lumimix-festival.fr</span
+            >
+        </p>
+    </div>
+</Layout>
+
+<style>
+    /* On réutilise ton style de bouton dégradé */
+    .download-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        height: 64px;
+        border-radius: 18px;
+        background: linear-gradient(90deg, #c148ff 0%, #ff2d80 100%);
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+        transition:
+            transform 150ms ease,
+            filter 150ms ease;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.05);
+    }
+</style>
