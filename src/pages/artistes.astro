@@ -1,0 +1,55 @@
+---
+// @ts-nocheck
+import Layout from "../layouts/Layout.astro";
+import CardArtiste from "../components/CardArtiste.astro";
+import { allArtistesByDate, getImageUrl } from "../../backend/backend.mjs";
+
+// On utilise la fonction de ton backend qui fait le expand de la scène
+const artistes = await allArtistesByDate();
+---
+
+<Layout titre="Artistes">
+    <section class="pt-32 pb-16 px-6 text-center">
+        <h1
+            class="text-6xl font-bold uppercase tracking-tighter mb-4 font-['Roboto',_sans-serif]"
+        >
+            <span
+                class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+            >
+                Artistes
+            </span>
+        </h1>
+        <p
+            class="text-white text-lg max-w-xs mx-auto opacity-90 leading-snug font-['Roboto',_sans-serif]"
+        >
+            Les plus grands DJs de la scène électronique internationale
+        </p>
+    </section>
+
+    <section class="px-6 pb-24 max-w-2xl mx-auto flex flex-col">
+        {
+            artistes.length > 0 ? (
+                artistes.map((artiste) => (
+                    <CardArtiste
+                        nom={artiste.nom_artiste}
+                        style={artiste.genre_artiste}
+                        scene={
+                            artiste.expand?.scene?.nom_scene || "Scène inconnue"
+                        }
+                        date={artiste.date_presentation}
+                        image={getImageUrl(artiste, artiste.photo_artiste)}
+                    />
+                ))
+            ) : (
+                <div class="text-center py-20">
+                    <p class="text-[#90A1B9] italic">
+                        Chargement des artistes...
+                    </p>
+                    <p class="text-xs mt-2 opacity-50 text-white">
+                        Vérifie que PocketBase est lancé sur le port 8090
+                    </p>
+                </div>
+            )
+        }
+    </section>
+</Layout>
