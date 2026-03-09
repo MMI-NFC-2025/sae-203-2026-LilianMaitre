@@ -1,0 +1,325 @@
+---
+// @ts-nocheck
+import Layout from "../layouts/Layout.astro";
+import CardArtiste from "../components/CardArtiste.astro";
+import { allArtistesByDate, getImageUrl } from "../../backend/backend.mjs";
+
+const artistes = await allArtistesByDate();
+
+// Normalise la date pour savoir quel jour (vendredi/samedi/dimanche)
+// Parse en UTC pour éviter les décalages de fuseau (ex: 2024-07-18 -> vendredi)
+const getDayKey = (value) => {
+    if (!value) return "";
+    const raw = value.toString().trim();
+    const lower = raw.toLowerCase();
+
+    if (lower.includes("vendredi")) return "vendredi";
+    if (lower.includes("samedi")) return "samedi";
+    if (lower.includes("dimanche")) return "dimanche";
+
+    // Forme ISO sans fuseau (YYYY-MM-DD) -> calcul en UTC pour ne pas glisser de jour
+    const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (isoMatch) {
+        const [_, y, m, d] = isoMatch;
+        const parsedUtc = new Date(
+            Date.UTC(Number(y), Number(m) - 1, Number(d)),
+        );
+        const day = parsedUtc.getUTCDay();
+        if (day === 5) return "vendredi";
+        if (day === 6) return "samedi";
+        if (day === 0) return "dimanche";
+    }
+
+    const parsed = new Date(raw);
+    if (!Number.isNaN(parsed.getTime())) {
+        const day = parsed.getDay();
+        if (day === 5) return "vendredi";
+        if (day === 6) return "samedi";
+        if (day === 0) return "dimanche";
+    }
+    return "";
+};
+
+const artistesVendredi = artistes.filter(
+    (a) => getDayKey(a.date_presentation) === "vendredi",
+);
+const artistesSamedi = artistes.filter(
+    (a) => getDayKey(a.date_presentation) === "samedi",
+);
+const artistesDimanche = artistes.filter(
+    (a) => getDayKey(a.date_presentation) === "dimanche",
+);
+---
+
+<Layout titre="Programme">
+    <section
+        class="relative min-h-[500px] w-full flex flex-col justify-end pb-16 px-6 text-center overflow-hidden font-roboto"
+    >
+        <img
+            src="/src/assets/img/programme.avif"
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover -z-10"
+        />
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-[#020618] via-purple-900/40 to-transparent -z-10"
+        >
+        </div>
+        <div class="relative pt-64">
+            <h1 class="text-7xl font-bold tracking-tighter mb-4">
+                <span
+                    class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+                >
+                    Programme
+                </span>
+            </h1>
+            <p
+                class="text-white text-lg max-w-md mx-auto opacity-90 leading-snug"
+            >
+                3 nuits de musique électronique avec les meilleurs DJs
+            </p>
+        </div>
+    </section>
+
+    <section class="px-6 py-12 max-w-2xl mx-auto">
+        <div
+            class="bg-[#0F172B]/50 border border-white/5 p-8 rounded-3xl shadow-xl"
+        >
+            <div class="flex items-center gap-3 mb-8">
+                <img
+                    src="/src/assets/icons/filter.svg"
+                    alt=""
+                    class="w-6 h-6 text-purple-500"
+                />
+                <h2 class="text-[#90A1B9] text-xl font-medium">
+                    Filtrer par :
+                </h2>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <select
+                    id="filter-jour"
+                    class="w-full h-14 bg-[#1E293B] rounded-xl px-6 text-white border border-white/5 appearance-none focus:border-purple-500 outline-none cursor-pointer"
+                >
+                    <option value="all">Tous les jours</option>
+                    <option value="vendredi">Vendredi 18 Juillet</option>
+                    <option value="samedi">Samedi 19 Juillet</option>
+                    <option value="dimanche">Dimanche 20 Juillet</option>
+                </select>
+
+                <select
+                    id="filter-scene"
+                    class="w-full h-14 bg-[#1E293B] rounded-xl px-6 text-white border border-white/5 appearance-none focus:border-purple-500 outline-none cursor-pointer"
+                >
+                    <option value="all">Toutes les scènes</option>
+                    <option value="Main Stage">Main Stage</option>
+                    <option value="Reflets Stage">Reflets Stage</option>
+                    <option value="Moon Stage">Moon Stage</option>
+                </select>
+
+                <div class="mt-8">
+                    <a
+                        href="/assets/programme.pdf"
+                        download="Programme-Festival.pdf"
+                        class="download-btn"
+                    >
+                        <img
+                            src="/src/assets/icons/download.svg"
+                            alt="Icône de téléchargement"
+                            class="download-icon"
+                        />
+                        <span class="text-lg">Télécharger le PDF</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section
+        id="liste-artistes"
+        class="px-6 pb-24 max-w-2xl mx-auto flex flex-col gap-12 mt-12"
+    >
+        <div class="day-group" data-jour="vendredi">
+            <h2
+                class="text-[#C27AFF] text-[40px] font-bold mb-4 mt-8 leading-tight w-full font-roboto"
+            >
+                Vendredi 18 <br /> Juillet
+            </h2>
+            {
+                artistesVendredi.map((artiste) => (
+                    <div
+                        class="artiste-item"
+                        data-jour={getDayKey(artiste.date_presentation)}
+                        data-scene={artiste.expand?.scene?.nom_scene}
+                    >
+                        <CardArtiste
+                            nom={artiste.nom_artiste}
+                            style={artiste.genre_artiste}
+                            date={artiste.date_presentation}
+                            scene={artiste.expand?.scene?.nom_scene}
+                            horaire={artiste.horaires}
+                            image={getImageUrl(artiste, artiste.photo_artiste)}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+
+        <div class="day-group" data-jour="samedi">
+            <h2
+                class="text-[#C27AFF] text-[40px] font-bold mb-4 mt-12 leading-tight w-full font-roboto"
+            >
+                Samedi 19 <br /> Juillet
+            </h2>
+            {
+                artistesSamedi.map((artiste) => (
+                    <div
+                        class="artiste-item"
+                        data-jour={getDayKey(artiste.date_presentation)}
+                        data-scene={artiste.expand?.scene?.nom_scene}
+                    >
+                        <CardArtiste
+                            nom={artiste.nom_artiste}
+                            style={artiste.genre_artiste}
+                            date={artiste.date_presentation}
+                            scene={artiste.expand?.scene?.nom_scene}
+                            horaire={artiste.horaires}
+                            image={getImageUrl(artiste, artiste.photo_artiste)}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+
+        <div class="day-group" data-jour="dimanche">
+            <h2
+                class="text-[#C27AFF] text-[40px] font-bold mb-4 mt-12 leading-tight w-full font-roboto"
+            >
+                Dimanche 20 <br /> Juillet
+            </h2>
+            {
+                artistesDimanche.map((artiste) => (
+                    <div
+                        class="artiste-item"
+                        data-jour={getDayKey(artiste.date_presentation)}
+                        data-scene={artiste.expand?.scene?.nom_scene}
+                    >
+                        <CardArtiste
+                            nom={artiste.nom_artiste}
+                            style={artiste.genre_artiste}
+                            date={artiste.date_presentation}
+                            scene={artiste.expand?.scene?.nom_scene}
+                            horaire={artiste.horaires}
+                            image={getImageUrl(artiste, artiste.photo_artiste)}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+</Layout>
+
+<script>
+    const filterJour = document.getElementById("filter-jour");
+    const filterScene = document.getElementById("filter-scene");
+    const artistes = document.querySelectorAll(".artiste-item");
+    const dayGroups = document.querySelectorAll(".day-group");
+
+    function filtrer() {
+        const jourValue = filterJour.value;
+        const sceneValue = filterScene.value;
+
+        dayGroups.forEach((group) => {
+            const groupJour = (
+                group.getAttribute("data-jour") || ""
+            ).toLowerCase();
+            let groupHasVisible = false;
+
+            const items = group.querySelectorAll(".artiste-item");
+            items.forEach((item) => {
+                const itemJour = (
+                    item.getAttribute("data-jour") || ""
+                ).toLowerCase();
+                const itemScene = item.getAttribute("data-scene");
+
+                const matchJour =
+                    jourValue === "all" ? true : itemJour === jourValue;
+                const matchScene =
+                    sceneValue === "all" ? true : itemScene === sceneValue;
+                const show = matchJour && matchScene;
+
+                item.style.display = show ? "block" : "none";
+                if (show) groupHasVisible = true;
+            });
+
+            const matchGroupJour =
+                jourValue === "all" || groupJour === jourValue;
+            group.style.display =
+                matchGroupJour && groupHasVisible ? "block" : "none";
+        });
+    }
+
+    // Écouter les changements sur les selects
+    filterJour.addEventListener("change", filtrer);
+    filterScene.addEventListener("change", filtrer);
+</script>
+
+<style>
+    /* Styliser le select lui-même */
+    select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 1rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    /* Styliser la liste déroulante (les options) */
+    select option {
+        background-color: #1e293b; /* Le bleu foncé de tes inputs */
+        color: white;
+        padding: 10px;
+    }
+
+    /* Pour éviter le fond blanc sur certains navigateurs mobiles */
+    select:focus {
+        background-color: #1e293b;
+    }
+
+    /* Bouton Télécharger similaire à la maquette */
+    .download-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        height: 56px;
+        border-radius: 18px;
+        background: linear-gradient(90deg, #c148ff 0%, #ff2d80 100%);
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition:
+            transform 150ms ease,
+            filter 150ms ease;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.05);
+    }
+
+    .download-btn:active {
+        transform: translateY(0);
+        filter: brightness(0.98);
+    }
+
+    .download-btn img {
+        width: 22px;
+        height: 22px;
+    }
+</style>
