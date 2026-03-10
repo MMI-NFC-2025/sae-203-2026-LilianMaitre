@@ -24,12 +24,11 @@ export function getImageUrl(record, filename) {
 
 export async function allScenes() {
     try {
-        const records = await pb.collection('scene').getFullList({
-            sort: 'nom_scene', // Optionnel : pour les trier par nom
-        });
+        // C'est ici : "scene" au lieu de "scenes"
+        const records = await pb.collection('scene').getFullList();
         return records;
     } catch (error) {
-        console.error("Erreur lors de la récupération des scènes :", error);
+        console.error("Erreur collection :", error);
         return [];
     }
 }
