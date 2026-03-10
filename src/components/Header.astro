@@ -1,126 +1,159 @@
 ---
-// @ts-nocheck
+// Code serveur (vide pour éviter les boucles d'import)
 ---
 
-<header
-    class="header bg-[#0B0D17] px-6 py-5 flex justify-between items-center fixed top-0 left-0 right-0 z-[1000]"
->
-    <a href="/" class="header__logo block h-10">
-        <img
-            src="/src/assets/icons/Luminix.svg"
-            alt="Luminix"
-            class="header__logo-img h-full w-auto block"
-        />
-    </a>
-
-    <button
-        id="menu-toggle"
-        class="header__menu-toggle bg-none border-none cursor-pointer flex flex-col gap-[0.375rem] w-10 h-10 justify-center items-center relative md:hidden"
-        aria-label="Menu"
+<header class="fixed top-0 left-0 w-full z-[100] font-roboto">
+    <div
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-[120] bg-[#020618]/90 backdrop-blur-xl border-b border-white/5"
     >
-        <span
-            class="header__menu-toggle-bar block w-full h-[3px] bg-white rounded-sm transition-all duration-300"
-        ></span>
-        <span
-            class="header__menu-toggle-bar block w-full h-[3px] bg-white rounded-sm transition-all duration-300"
-        ></span>
-        <span
-            class="header__menu-toggle-bar block w-full h-[3px] bg-white rounded-sm transition-all duration-300"
-        ></span>
-    </button>
+        <a href="/" class="transition-transform active:scale-95">
+            <img
+                src="/src/assets/icons/Luminix.svg"
+                alt="Lumimix Logo"
+                class="w-32 h-auto"
+            />
+        </a>
 
-    <nav
-        id="menu-nav"
-        class="fixed inset-0 bg-[#0B0D17] translate-x-full transition-transform duration-300 md:static md:translate-x-0 md:bg-transparent z-[999] flex flex-col md:flex-row items-center justify-center h-screen md:h-auto"
-    >
-        <ul
-            class="flex flex-col md:flex-row items-center gap-6 md:gap-8 text-[2.25rem] md:text-sm font-extrabold leading-[1.1] tracking-tight text-white font-roboto text-center"
+        <button
+            id="menu-toggle"
+            class="text-white p-2 focus:outline-none"
+            aria-label="Menu"
         >
-            <li>
-                <a href="/" class="hover:text-purple-400 transition-colors"
-                    >Le Festival</a
+            <svg
+                id="icon-burger"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-9 w-9"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+            <svg
+                id="icon-close"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-9 w-9 hidden"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div
+        id="full-menu"
+        class="fixed inset-0 bg-[#020618] hidden z-[110] flex-col overflow-y-auto"
+    >
+        <div
+            class="flex items-center justify-between px-6 h-20 border-b border-white/5"
+        >
+            <a href="/" class="transition-transform active:scale-95">
+                <img
+                    src="/src/assets/icons/Luminix.svg"
+                    alt="Lumimix Logo"
+                    class="w-28 h-auto"
+                    loading="lazy"
+                />
+            </a>
+            <button
+                id="menu-close"
+                class="text-white p-2 focus:outline-none"
+                aria-label="Fermer le menu"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-9 w-9"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                 >
-            </li>
-            <li>
-                <a
-                    href="/programme"
-                    class="hover:text-purple-400 transition-colors">Programme</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/artistes"
-                    class="hover:text-purple-400 transition-colors">Artistes</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/scenes"
-                    class="bg-gradient-to-r from-[#C27AFF] to-[#51A2FF] bg-clip-text text-transparent"
-                >
-                    Scènes
-                </a>
-            </li>
-            <li>
-                <a
-                    href="/infos"
-                    class="hover:text-purple-400 transition-colors text-center"
-                    >Infos Pratiques</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/contact"
-                    class="hover:text-purple-400 transition-colors">Contact</a
-                >
-            </li>
-        </ul>
-    </nav>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="flex-1 flex items-center justify-center px-6 py-10">
+            <ul
+                class="flex flex-col gap-8 text-center text-3xl font-semibold text-[#B7C2D9]"
+            >
+                <li>
+                    <a href="/" class="hover:text-white transition">Accueil</a>
+                </li>
+                <li>
+                    <a href="/programme" class="hover:text-white transition"
+                        >Programme</a>
+                </li>
+                <li>
+                    <a href="/artistes" class="hover:text-white transition"
+                        >Artistes</a>
+                </li>
+                <li>
+                    <a href="/scenes" class="hover:text-white transition"
+                        >Scènes</a>
+                </li>
+                <li>
+                    <a href="/infos" class="hover:text-white transition"
+                        >Infos Pratiques</a>
+                </li>
+                <li>
+                    <a
+                        href="/contact"
+                        class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent font-bold"
+                    >
+                        Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="/festival" class="hover:text-white transition"
+                        >Le Festival</a
+                    >
+                </li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
-<style>
-    /* Import de la police Roboto comme dans ton index.html */
-    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-
-    .font-roboto {
-        font-family: "Roboto", sans-serif;
-    }
-
-    /* Ta logique de croix précise */
-    .header__menu-toggle--active {
-        gap: 0 !important;
-        position: fixed;
-        top: 1.25rem;
-        right: 1.5rem;
-        z-index: 1001;
-    }
-
-    .header__menu-toggle--active .header__menu-toggle-bar {
-        position: absolute;
-        width: 70%;
-    }
-
-    .header__menu-toggle--active .header__menu-toggle-bar:nth-child(1) {
-        transform: rotate(45deg);
-    }
-
-    .header__menu-toggle--active .header__menu-toggle-bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    .header__menu-toggle--active .header__menu-toggle-bar:nth-child(3) {
-        transform: rotate(-45deg);
-    }
-</style>
-
 <script>
-    // @ts-nocheck
-    const toggleBtn = document.getElementById("menu-toggle");
-    const menuNav = document.getElementById("menu-nav");
+    const btn = document.getElementById("menu-toggle");
+    const menu = document.getElementById("full-menu");
+    const burger = document.getElementById("icon-burger");
+    const close = document.getElementById("icon-close");
+    const btnClose = document.getElementById("menu-close");
 
-    toggleBtn.addEventListener("click", () => {
-        toggleBtn.classList.toggle("header__menu-toggle--active");
-        menuNav.classList.toggle("translate-x-full");
-        document.body.classList.toggle("overflow-hidden");
+    const openMenu = () => {
+        menu?.classList.remove("hidden");
+        menu?.classList.add("flex");
+        burger?.classList.add("hidden");
+        close?.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeMenu = () => {
+        menu?.classList.add("hidden");
+        menu?.classList.remove("flex");
+        burger?.classList.remove("hidden");
+        close?.classList.add("hidden");
+        document.body.style.overflow = "";
+    };
+
+    btn?.addEventListener("click", () => {
+        const isHidden = menu?.classList.contains("hidden");
+        isHidden ? openMenu() : closeMenu();
     });
+
+    btnClose?.addEventListener("click", closeMenu);
 </script>
