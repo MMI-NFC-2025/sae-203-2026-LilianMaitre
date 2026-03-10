@@ -6,18 +6,34 @@ const { artiste } = Astro.props;
 // Sécurité : on n'affiche rien si l'objet artiste est vide
 if (!artiste) return null;
 
-// On prépare les données d'affichage
-const d = new Date(artiste.date_presentation);
+// On prépare les données d'affichage (forcer UTC pour éviter les décalages de jour)
+const hasDate = Boolean(artiste.date_presentation);
+const d = hasDate ? new Date(artiste.date_presentation) : null;
 const dateFormatee = d
-    .toLocaleDateString("fr-FR", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-    })
-    .replace(/^\w/, (c) => c.toUpperCase());
-const start = `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
-const end = `${((d.getHours() + 2) % 24).toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
-const horaire = `${start} - ${end}`;
+    ? d
+          .toLocaleDateString("fr-FR", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              timeZone: "UTC",
+          })
+          .replace(/^\w/, (c) => c.toUpperCase())
+    : "";
+
+const start = d
+    ? `${d.getUTCHours().toString().padStart(2, "0")}:${d
+          .getUTCMinutes()
+          .toString()
+          .padStart(2, "0")}`
+    : "--:--";
+const end = d
+    ? `${((d.getUTCHours() + 2) % 24).toString().padStart(2, "0")}:${d
+          .getUTCMinutes()
+          .toString()
+          .padStart(2, "0")}`
+    : "--:--";
+const horaire = artiste.horaires || `${start} - ${end}`;
+const imageUrl = getImageUrl(artiste, artiste.photo_artiste);
 ---
 
 <article
@@ -28,7 +44,7 @@ const horaire = `${start} - ${end}`;
     {/* IMAGE avec Badge Genre en haut à droite */}
     <div class="relative w-full h-[320px] overflow-hidden">
         <img
-            src={getImageUrl(artiste, artiste.photo_artiste)}
+            src={imageUrl}
             alt={artiste.nom_artiste}
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />

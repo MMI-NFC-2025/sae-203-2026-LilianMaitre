@@ -1,42 +1,36 @@
 ---
-// @ts-nocheck
 import Layout from "../layouts/Layout.astro";
 import CardArtiste from "../components/CardArtiste.astro";
 import { allArtistesByDate } from "../../backend/backend.mjs";
 
-// Récupération des données depuis PocketBase
 const artistes = await allArtistesByDate();
 ---
 
 <Layout titre="Artistes | Lumimix Festival">
     <main class="bg-[#020618] min-h-screen">
-        {/* --- SECTION HERO (Haut de page) --- */}
         <section
-            class="relative h-[60vh] w-full flex flex-col justify-end pb-20 px-6 text-center overflow-hidden"
+            class="relative min-h-[70vh] w-full flex items-center justify-center text-center px-6 overflow-hidden font-roboto"
         >
-            <img
-                src="/img/artistes.avif"
-                alt="Ambiance Festival"
-                class="absolute inset-0 w-full h-full object-cover -z-20"
-            />
-            {/* Dégradé pour la lisibilité du texte */}
-            <div
-                class="absolute inset-0 bg-gradient-to-t from-[#020618] via-[#020618]/40 to-transparent -z-10"
-            >
-            </div>
-
-            <div class="relative max-w-4xl mx-auto">
-                <h1
-                    class="text-6xl md:text-8xl font-black tracking-tighter mb-4 uppercase italic"
+            <div class="absolute inset-0 -z-20">
+                <img
+                    src="/img/hero_artistes.avif"
+                    alt="Ambiance Festival"
+                    class="w-full h-full object-cover"
+                />
+                <div
+                    class="absolute inset-0 bg-gradient-to-b from-[#020618]/10 via-[#020618]/55 to-[#020618]/90"
                 >
+                </div>
+            </div>
+            <div class="relative max-w-3xl mx-auto">
+                <h1 class="text-6xl md:text-7xl font-bold tracking-tight mb-4">
                     <span
                         class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+                        >Artistes</span
                     >
-                        Artistes
-                    </span>
                 </h1>
                 <p
-                    class="text-white text-xl md:text-2xl max-w-xl mx-auto opacity-90 leading-snug font-medium italic"
+                    class="text-white text-xl md:text-2xl max-w-xl mx-auto opacity-90 leading-snug font-medium"
                 >
                     Les plus grands DJs de la scène électronique internationale
                     réunis pour vous.
@@ -44,13 +38,8 @@ const artistes = await allArtistesByDate();
             </div>
         </section>
 
-        {/* --- SECTION GRILLE (Le cœur de la page) --- */}
         <section class="max-w-7xl mx-auto px-6 py-24">
-            {
-                /* justify-items-center : centre les cartes dans leurs colonnes
-                grid-cols-1/2/3 : gère le nombre de cartes selon la taille de l'écran
-            */
-            }
+
             <div
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center"
             >

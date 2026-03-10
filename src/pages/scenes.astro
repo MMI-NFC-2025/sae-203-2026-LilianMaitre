@@ -92,8 +92,8 @@ const scenes = await allScenes();
                         </div>
 
                         <a
-                            href="/programme"
-                            class="text-[#C27AFF] font-bold flex items-center gap-2 mt-4"
+                            href={`/scenes/${scene.id}`}
+                            class="text-[#C27AFF] font-bold flex items-center gap-2 mt-4 transition-all hover:gap-4"
                         >
                             Voir les artistes <span class="text-2xl">↗</span>
                         </a>
@@ -151,4 +151,3 @@ const scenes = await allScenes();
         </div>
     </section>
 </Layout>
-

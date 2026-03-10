@@ -1,0 +1,62 @@
+---
+// @ts-nocheck
+import Layout from "../../layouts/Layout.astro";
+import { allScenes } from "../../../backend/backend.mjs";
+
+const scenes = await allScenes();
+---
+
+<Layout titre="Les Scènes | Lumimix">
+    <main class="bg-[#020618] min-h-screen text-white pt-32 pb-20 px-6">
+        {/* EN-TÊTE */}
+        <div class="max-w-6xl mx-auto mb-20">
+            <h1
+                class="text-7xl md:text-9xl font-black uppercase italic tracking-tighter leading-none"
+            >
+                <span
+                    class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+                >
+                    Les Scènes
+                </span>
+            </h1>
+        </div>
+
+        {/* LISTE DES SCÈNES (Design épuré) */}
+        <div class="max-w-6xl mx-auto space-y-12">
+            {
+                scenes.map((scene) => (
+                    <div class="group relative bg-[#0F172B] border border-white/5 rounded-[3rem] p-10 md:p-16 overflow-hidden transition-all hover:border-purple-500/30 shadow-2xl">
+                        {/* Effet de lueur en fond au survol */}
+                        <div class="absolute -right-20 -top-20 w-64 h-64 bg-purple-600/10 blur-[100px] group-hover:bg-purple-600/20 transition-all" />
+
+                        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-10">
+                            {/* GAUCHE : Nom de la scène */}
+                            <div class="md:w-1/2">
+                                <h2 class="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none mb-4">
+                                    {scene.nom_scene}
+                                </h2>
+                                <div class="h-1 w-20 bg-[#A855F7] rounded-full" />
+                            </div>
+
+                            {/* DROITE : Description et Action */}
+                            <div class="md:w-1/2 flex flex-col items-start gap-8">
+                                <p class="text-[#90A1B9] text-xl md:text-2xl leading-relaxed italic font-medium">
+                                    {scene.description_scene ||
+                                        "Une expérience sonore immersive unique au cœur du festival."}
+                                </p>
+
+                                <a
+                                    href={`/scenes/${scene.id}`}
+                                    class="inline-flex items-center gap-4 text-[#C27AFF] font-black uppercase tracking-[0.2em] text-sm group-hover:gap-6 transition-all"
+                                >
+                                    Explorer la scène
+                                    <span class="text-3xl">↗</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </main>
+</Layout>

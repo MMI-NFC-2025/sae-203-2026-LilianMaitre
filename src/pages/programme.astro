@@ -2,7 +2,7 @@
 // @ts-nocheck
 import Layout from "../layouts/Layout.astro";
 import CardArtiste from "../components/CardArtiste.astro";
-import { allArtistesByDate, getImageUrl } from "../../backend/backend.mjs";
+import { allArtistesByDate } from "../../backend/backend.mjs";
 
 const artistes = await allArtistesByDate();
 
@@ -65,7 +65,9 @@ const artistesDimanche = artistes.filter(
         >
         </div>
         <div class="relative pt-64">
-            <h1 class="text-7xl font-bold tracking-tighter mb-4">
+            <h1
+                class="programme-title text-6xl md:text-8xl font-roboto font-bold tracking-tighter mb-4"
+            >
                 <span
                     class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
                 >
@@ -151,14 +153,7 @@ const artistesDimanche = artistes.filter(
                         data-jour={getDayKey(artiste.date_presentation)}
                         data-scene={artiste.expand?.scene?.nom_scene}
                     >
-                        <CardArtiste
-                            nom={artiste.nom_artiste}
-                            style={artiste.genre_artiste}
-                            date={artiste.date_presentation}
-                            scene={artiste.expand?.scene?.nom_scene}
-                            horaire={artiste.horaires}
-                            image={getImageUrl(artiste, artiste.photo_artiste)}
-                        />
+                        <CardArtiste artiste={artiste} />
                     </div>
                 ))
             }
@@ -177,14 +172,7 @@ const artistesDimanche = artistes.filter(
                         data-jour={getDayKey(artiste.date_presentation)}
                         data-scene={artiste.expand?.scene?.nom_scene}
                     >
-                        <CardArtiste
-                            nom={artiste.nom_artiste}
-                            style={artiste.genre_artiste}
-                            date={artiste.date_presentation}
-                            scene={artiste.expand?.scene?.nom_scene}
-                            horaire={artiste.horaires}
-                            image={getImageUrl(artiste, artiste.photo_artiste)}
-                        />
+                        <CardArtiste artiste={artiste} />
                     </div>
                 ))
             }
@@ -203,14 +191,7 @@ const artistesDimanche = artistes.filter(
                         data-jour={getDayKey(artiste.date_presentation)}
                         data-scene={artiste.expand?.scene?.nom_scene}
                     >
-                        <CardArtiste
-                            nom={artiste.nom_artiste}
-                            style={artiste.genre_artiste}
-                            date={artiste.date_presentation}
-                            scene={artiste.expand?.scene?.nom_scene}
-                            horaire={artiste.horaires}
-                            image={getImageUrl(artiste, artiste.photo_artiste)}
-                        />
+                        <CardArtiste artiste={artiste} />
                     </div>
                 ))
             }
@@ -322,5 +303,23 @@ const artistesDimanche = artistes.filter(
         width: 22px;
         height: 22px;
     }
-</style>
 
+    .programme-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    .day-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 36px;
+    }
+
+    .artiste-item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+</style>
