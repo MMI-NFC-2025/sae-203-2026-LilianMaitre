@@ -1,0 +1,348 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const tarifs = [
+    {
+        nom: "Pass 1 Jour",
+        prix: "65€",
+        avantages: [
+            "Accès 1 journée complète",
+            "Accès à toutes les scènes",
+            "Parking inclus",
+        ],
+        populaire: false,
+    },
+    {
+        nom: "Pass 3 Jours",
+        prix: "150€",
+        avantages: [
+            "Accès 3 jours complets",
+            "Accès à toutes les scènes",
+            "Parking inclus",
+            "Merch exclusif",
+        ],
+        populaire: true,
+    },
+    {
+        nom: "Pass VIP",
+        prix: "299€",
+        avantages: [
+            "Tout du Pass 3 Jours",
+            "Zone VIP privée",
+            "Bar privé",
+            "Meet & Greet artistes",
+        ],
+        populaire: false,
+    },
+];
+
+const hebergements = [
+    {
+        nom: "Camping Standard",
+        description:
+            "Emplacements camping pour tente personnelle, accès sanitaires et douches.",
+        prix: "20€ / nuit",
+    },
+    {
+        nom: "Camping Confort",
+        description:
+            "Emplacements délimités avec accès électricité, sanitaires premium.",
+        prix: "40€ / nuit",
+    },
+    {
+        nom: "Glamping",
+        description:
+            "Tentes pré-installées tout confort avec lits, électricité, mobilier.",
+        prix: "120€ / nuit",
+    },
+];
+
+const hotelsPartenaires = [
+    {
+        nom: "Hôtel Le Tonneau d'Or",
+        localisation: "Belfort (10 km)",
+        tarif: "à partir de 85€/nuit",
+    },
+    {
+        nom: "Ibis Belfort Centre",
+        localisation: "Belfort (12 km)",
+        tarif: "à partir de 75€/nuit",
+    },
+    {
+        nom: "Mercure Mulhouse Centre",
+        localisation: "Mulhouse (20 km)",
+        tarif: "à partir de 95€/nuit",
+    },
+];
+
+const transports = [
+    {
+        titre: "En voiture",
+        iconSrc: "/src/assets/icons/voiture.svg",
+        lignes: [
+            "Depuis Belfort : 15 min via D465",
+            "Depuis Mulhouse : 25 min via A36",
+            "Depuis Paris : 4h30 via A36",
+        ],
+        note: "Parkings gratuits sur place avec navettes vers l'entrée.",
+        accent: "border border-white/5 bg-[#0F172B]",
+    },
+    {
+        titre: "En train",
+        iconSrc: "/src/assets/icons/train.svg",
+        lignes: [
+            "Gare de Belfort-Montbéliard TGV",
+            "Paris-Belfort : 2h30",
+            "Lyon-Belfort : 3h",
+        ],
+        note: "Navettes gratuites depuis la gare vers le festival.",
+        accent: "border border-white/5 bg-[#0F172B]",
+    },
+    {
+        titre: "Covoiturage",
+        iconSrc: "/src/assets/icons/commun.svg",
+        lignes: [
+            "Parking covoiturage dédié avec places réservées.",
+            "Utilisez l'application BlaBlaCar avec le code LUMIMIX2025 pour trouver des covoitureurs.",
+        ],
+        note: "Réduction de 10€ sur votre billet si vous arrivez à 4 dans un véhicule.",
+        accent: "bg-gradient-to-b from-[#1F1438] to-[#0F172B] border border-[#8B5CF6]/40",
+    },
+    {
+        titre: "Adresse du festival",
+        iconSrc: "/src/assets/icons/localisation.svg",
+        lignes: ["Base de loisirs du Malsaucy", "90300 Sermamagny, France"],
+        note: "",
+        accent: "border border-white/5 bg-[#0F172B]",
+    },
+];
+
+const faqs = [
+    "Quelles sont les dates du festival ?",
+    "Où se trouve le festival ?",
+    "Les billets sont-ils remboursables ?",
+    "Y a-t-il un camping sur place ?",
+    "Le festival est-il accessible aux personnes à mobilité réduite ?",
+    "Peut-on apporter de la nourriture et des boissons ?",
+    "Y a-t-il une limite d'âge ?",
+    "Quels moyens de paiement sont acceptés sur le festival ?",
+];
+---
+
+<Layout titre="Infos Pratiques">
+    <section
+        class="relative min-h-[450px] w-full flex items-center justify-center px-6 text-center overflow-hidden font-roboto"
+    >
+        <img
+            src="/src/assets/img/hero_infos.avif"
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover -z-20 opacity-50"
+        />
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-[#020618] to-transparent -z-10"
+        >
+        </div>
+
+        <div class="relative z-10">
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-4">
+                <span
+                    class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+                    >Infos <br /> Pratiques</span
+                >
+            </h1>
+            <p class="text-white text-lg max-w-md mx-auto opacity-80">
+                Tout ce que vous devez savoir pour profiter au mieux du festival
+            </p>
+        </div>
+    </section>
+
+    <section class="px-6 py-20 max-w-2xl mx-auto font-roboto">
+        <div class="flex items-center gap-4 mb-12">
+            <img
+                src="/src/assets/icons/tarifs.svg"
+                alt=""
+                class="w-10 h-10"
+                loading="lazy"
+            />
+            <h2 class="text-5xl font-bold text-white tracking-tight">Tarifs</h2>
+        </div>
+
+        <div class="flex flex-col gap-12 mt-16 px-4 font-roboto">
+            {
+                tarifs.map((tarif) => (
+                    <div
+                        class={`relative p-10 pt-14 rounded-[2.5rem] ${tarif.populaire ? "bg-gradient-to-b from-[#160D26] to-[#0F172B] border-2 border-[#C27AFF]" : "bg-[#0F172B] border border-white/5"}`}
+                    >
+                        {/* LE BADGE CENTRÉ SUR LA BORDURE */}
+                        {tarif.populaire && (
+                            <div class="absolute -top-5 left-1/2 -translate-x-1/2">
+                                <span class="bg-[#8B5CF6] text-white px-6 py-1.5 rounded-full text-xs font-bold shadow-[0_0_20px_rgba(139,92,246,0.5)]">
+                                    Populaire
+                                </span>
+                            </div>
+                        )}
+
+                        <h3 class="text-4xl font-bold text-white mb-4">
+                            {tarif.nom}
+                        </h3>
+
+                        <p class="text-5xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent mb-10">
+                            {tarif.prix}
+                        </p>
+
+                        <ul class="flex flex-col gap-5">
+                            {tarif.avantages.map((avantage) => (
+                                <li class="flex items-center gap-3 text-[#90A1B9] text-lg">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-5 h-5 text-[#C27AFF]"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"
+                                        />
+                                    </svg>
+                                    {avantage}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="px-6 pb-20 max-w-4xl mx-auto font-roboto">
+        <div class="flex items-center gap-4 mb-10">
+            <img
+                src="/src/assets/icons/hebergement.svg"
+                alt=""
+                class="w-10 h-10"
+                loading="lazy"
+            />
+            <h2 class="text-5xl font-bold text-white tracking-tight">
+                Hébergements
+            </h2>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            {
+                hebergements.map((hebergement) => (
+                    <div class="bg-[#0F172B] border border-white/5 rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+                        <h3 class="text-2xl font-semibold text-white mb-2">
+                            {hebergement.nom}
+                        </h3>
+                        <p class="text-sm text-[#A8B6CE] leading-relaxed">
+                            {hebergement.description}
+                        </p>
+                        <p class="text-sm font-semibold text-[#8B5CF6] mt-4">
+                            {hebergement.prix}
+                        </p>
+                    </div>
+                ))
+            }
+
+            <div
+                class="bg-gradient-to-b from-[#1A1033] to-[#0F172B] border border-[#8B5CF6]/30 rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+            >
+                <h3 class="text-2xl font-semibold text-white mb-2">
+                    Hôtels partenaires
+                </h3>
+                <p class="text-sm text-[#A8B6CE] mb-4">
+                    Nous avons négocié des tarifs préférentiels avec plusieurs
+                    hôtels de Belfort et Mulhouse.
+                </p>
+                <ul class="text-sm text-white space-y-2">
+                    {
+                        hotelsPartenaires.map((hotel) => (
+                            <li class="leading-relaxed">
+                                • {hotel.nom} - {hotel.localisation} -{" "}
+                                {hotel.tarif}
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-6 pb-24 max-w-4xl mx-auto font-roboto">
+        <div class="flex items-center gap-4 mb-10">
+            <img
+                src="/src/assets/icons/voiture.svg"
+                alt=""
+                class="w-10 h-10"
+                loading="lazy"
+            />
+            <h2 class="text-5xl font-bold text-white tracking-tight">
+                Transport & Accès
+            </h2>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            {
+                transports.map((mode) => (
+                    <div
+                        class={`${mode.accent} rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]`}
+                    >
+                        <div class="flex items-center gap-3 mb-4">
+                            {mode.iconSrc && (
+                                <img
+                                    src={mode.iconSrc}
+                                    alt=""
+                                    class="w-6 h-6"
+                                    loading="lazy"
+                                />
+                            )}
+                            <h3 class="text-2xl font-semibold text-white">
+                                {mode.titre}
+                            </h3>
+                        </div>
+
+                        <ul class="text-sm text-[#A8B6CE] space-y-1">
+                            {mode.lignes.map((ligne) => (
+                                <li>{ligne}</li>
+                            ))}
+                        </ul>
+
+                        {mode.note && (
+                            <p class="text-xs text-[#7C8CA9] mt-4 leading-relaxed">
+                                {mode.note}
+                            </p>
+                        )}
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="px-6 pb-24 max-w-4xl mx-auto font-roboto">
+        <div class="flex items-center gap-4 mb-10">
+            <img
+                src="/src/assets/icons/faq.svg"
+                alt=""
+                class="w-10 h-10"
+                loading="lazy"
+            />
+            <h2 class="text-5xl font-bold text-white tracking-tight">FAQ</h2>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            {faqs.map((question) => (
+                <div class="bg-[#0F172B] border border-white/5 rounded-3xl px-5 py-4 shadow-[0_14px_40px_rgba(0,0,0,0.32)]">
+                    <div class="flex items-start justify-between gap-4">
+                        <p class="text-lg font-semibold text-white leading-snug">
+                            {question}
+                        </p>
+                        <span class="text-2xl font-bold text-[#A95CFF]">+</span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
+</Layout>
