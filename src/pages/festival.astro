@@ -1,5 +1,65 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const valeurs = [
+    {
+        titre: "Inclusion",
+        iconPath: "/icons/inclusivite.svg",
+        description:
+            "Un festival ouvert à toutes et tous, où chacun se sent accueilli, respecté et libre de vivre la fête, peu importe son style ou son origine.",
+    },
+    {
+        titre: "Creativité",
+        iconPath: "/icons/creativitefestival.svg",
+        description:
+            "Un terrain d'expression où l'imagination et l'innovation prennent vie : des shows qui racontent une histoire, des idées visuelles nouvelles, un festival unique et en renouvellement constant.",
+    },
+    {
+        titre: "Divertissement",
+        iconPath: "/icons/divertissementfestival.svg",
+        description:
+            "Un moment de plaisir pur : énergie, danse, émotions positives, déconnexion du quotidien — s'en mettre plein les yeux autant que vibrer au son des basses.",
+    },
+
+    {
+        titre: "Convivialité & Bienveillance",
+        iconPath: "/icons/coeur.svg",
+        description:
+            "Une ambiance safe, collective et positive où chacun peut profiter de l'expérience en toute sécurité et dans le respect mutuel.",
+    },
+    {
+        titre: "Émerveillement",
+        iconPath: "/icons/creativitefestival.svg",
+        description:
+            "Une nuit magique, des surprises visuelles à chaque coin, une expérience mémorable qui reste gravée dans les mémoires.",
+    },
+];
+const equipe = [
+    {
+        nom: "Sophie Martin",
+        role: "Directrice du Festival",
+        description: "Passionnée de musique électronique depuis 15 ans",
+        initiale: "S",
+    },
+    {
+        nom: "Lucas Dubois",
+        role: "Directeur Artistique",
+        description: "Ancien programmateur de clubs parisiens",
+        initiale: "L",
+    },
+    {
+        nom: "Emma Laurent",
+        role: "Responsable Scénographie",
+        description: "Spécialiste en design lumière et installation immersive",
+        initiale: "E",
+    },
+    {
+        nom: "Thomas Bernard",
+        role: "Responsable Technique",
+        description: "Expert son et lumière avec 20 ans d'expérience",
+        initiale: "T",
+    },
+];
 ---
 
 <Layout titre="Le Festival">
@@ -8,15 +68,13 @@ import Layout from "../layouts/Layout.astro";
     >
         <div class="absolute inset-0 bg-gradient-to-t from-[#020618] z-10">
         </div>
-
         <img
             src="/img/hero_apropos.avif"
             alt=""
             class="absolute inset-0 w-full h-full object-cover opacity-60 -z-10"
         />
-
         <h1
-            class="relative z-20 text-6xl md:text-8xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent uppercase tracking-tighter"
+            class="relative z-20 text-6xl md:text-8xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent tracking-tighter"
         >
             Le Festival
         </h1>
@@ -25,7 +83,23 @@ import Layout from "../layouts/Layout.astro";
     <section class="px-6 py-24 max-w-3xl mx-auto font-roboto">
         <h2 class="text-4xl font-bold text-[#C27AFF] mb-12">Notre Histoire</h2>
         <div class="flex flex-col gap-8 text-[#90A1B9] text-lg text-justify">
-            <p>Lumimix est né en 2023...</p>
+            <p>
+                Lumimix est né en 2023 d'une vision simple mais ambitieuse :
+                créer un festival où la musique électronique rencontre l'art
+                visuel dans un cadre naturel exceptionnel.
+            </p>
+            <p>
+                Situé au cœur du lac de Malsaucy dans le Territoire de Belfort,
+                notre festival transforme ce lieu magique en une scène immersive
+                où la lumière danse sur l'eau, où les drones illuminent le ciel
+                nocturne, et où les plus grands DJs internationaux créent des
+                moments inoubliables.
+            </p>
+            <p>
+                Chaque édition repousse les limites de la créativité avec des
+                scénographies toujours plus innovantes, tout en restant fidèle à
+                nos valeurs d'inclusion, de créativité et de divertissement pur.
+            </p>
         </div>
 
         <div class="mt-20 relative group">
@@ -33,12 +107,132 @@ import Layout from "../layouts/Layout.astro";
                 class="absolute -inset-1 bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] rounded-[2.5rem] blur opacity-20"
             >
             </div>
-
             <img
                 src="/img/illufestival.avif"
                 alt=""
-                class="relative rounded-[2.5rem] w-full h-[450px] object-cover shadow-2xl border border-white/10"
+                class="relative rounded-[2.5rem] w-full h-[320px] object-cover shadow-2xl border border-white/10"
             />
+        </div>
+    </section>
+
+    <section class="px-6 py-20 max-w-3xl mx-auto font-roboto bg-[#020618]">
+        <h2
+            class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent text-center mb-16 uppercase tracking-tighter"
+        >
+            Notre Charte de Valeurs
+        </h2>
+
+        <div class="grid gap-10">
+            {
+                valeurs.map((valeur, idx) => (
+                    /* --- Effet commun + dégradé pour les 2 dernières cards --- */
+                    <div
+                        class={`border border-white/5 p-10 rounded-[2.5rem]
+                        transition-all duration-700 group relative overflow-hidden
+                        ${idx >= 3 ? "bg-gradient-to-br from-[#21142f] via-[#1c203c] to-[#0f172b]" : "bg-[#0F172B]"}`}
+                    >
+                        <div class="mb-6 relative z-10">
+                            <img
+                                src={valeur.iconPath}
+                                alt=""
+                                class="w-14 h-14 transition-transform duration-300 group-hover:scale-110"
+                            />
+                        </div>
+
+                        <h3 class="text-white text-3xl font-bold mb-4 relative z-10 transition-colors duration-500 group-hover:text-white/90">
+                            {valeur.titre}
+                        </h3>
+                        <p class="text-[#90A1B9] text-lg leading-relaxed relative z-10">
+                            {valeur.description}
+                        </p>
+
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#C27AFF]/5 to-[#FB64B6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-0" />
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+    <section
+        class="px-6 py-24 max-w-3xl mx-auto font-roboto bg-[#020618] text-center"
+    >
+        <h2
+            class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent mb-6 uppercase tracking-tighter"
+        >
+            Notre Équipe
+        </h2>
+        <p
+            class="text-[#90A1B9] text-lg max-w-md mx-auto mb-16 leading-relaxed"
+        >
+            Des passionnés qui travaillent toute l'année pour vous offrir une
+            expérience inoubliable
+        </p>
+
+        <div class="grid gap-10">
+            {
+                equipe.map((membre) => (
+                    <div
+                        class="bg-[#0F172B] border border-white/5 p-10 rounded-[2.5rem] shadow-xl 
+                        hover:border-[#C27AFF]/30 transition-all duration-500 group relative overflow-hidden"
+                    >
+                        <div
+                            class="w-28 h-28 mx-auto mb-10 rounded-full flex items-center justify-center relative
+                            bg-gradient-to-br from-[#9810FA] to-[#E60076]
+                            shadow-inner [box-shadow:none]"
+                        >
+                            <span class="text-white text-5xl font-bold z-10">
+                                {membre.initiale}
+                            </span>
+
+                            <div class="absolute inset-0 rounded-full bg-gradient-to-t from-black/25 to-transparent" />
+                        </div>
+
+                        <h3 class="text-white text-3xl font-bold mb-2 transition-colors group-hover:text-white/90">
+                            {membre.nom}
+                        </h3>
+
+                        <p class="text-[#C27AFF] font-bold mb-4 tracking-[0.2em] text-sm">
+                            {membre.role}
+                        </p>
+
+                        <p class="text-[#90A1B9]/90 font-normal text-lg leading-relaxed">
+                            {membre.description}
+                        </p>
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-[#9810FA]/5 to-[#E60076]/5 opacity-0 
+                            group-hover:opacity-100 transition-opacity duration-1000 -z-10"
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+    <section
+        class="px-6 py-24 max-w-3xl mx-auto font-roboto bg-[#020618] text-center border-t border-white/5"
+    >
+        <h2
+            class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent mb-12 tracking-tighter"
+        >
+            Notre Mission
+        </h2>
+
+        <div class="flex flex-col gap-10">
+            <p
+                class="text-white text-2xl md:text-3xl font-medium leading-tight"
+            >
+                Créer un voyage sensoriel unique où la musique, la lumière et la
+                nature fusionnent pour offrir une expérience immersive et
+                mémorable.
+            </p>
+
+            <p
+                class="text-[#90A1B9] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+            >
+                Nous croyons que la musique électronique transcende les
+                frontières et unit les gens. Lumimix est plus qu'un festival —
+                c'est une célébration de la vie nocturne, de l'innovation
+                artistique et du pouvoir de la communauté.
+            </p>
         </div>
     </section>
 </Layout>
