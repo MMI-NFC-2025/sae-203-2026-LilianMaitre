@@ -6,21 +6,21 @@ const infosContact = [
         titre: "Email",
         valeur: "contact@lumimix-festival.fr",
         sousTexte: "Réponse sous 48h",
-        icone: "/src/assets/icons/mail.svg",
+        icone: "/icons/mail.svg",
         size: "w-6 h-6",
     },
     {
         titre: "Téléphone",
         valeur: "+33 3 84 22 00 00",
         sousTexte: "Lun-Ven : 9h-18h",
-        icone: "/src/assets/icons/tel.svg",
+        icone: "/icons/tel.svg",
         size: "w-6 h-6",
     },
     {
         titre: "Adresse",
         valeur: "Lumimix Festival, Base de loisirs du Malsaucy, 90300 Sermamagny, France",
         sousTexte: "",
-        icone: "/src/assets/icons/locbleu.svg",
+        icone: "/icons/locbleu.svg",
         size: "w-5 h-6",
     },
 ];
@@ -38,7 +38,7 @@ const reseaux = [
         class="relative min-h-[500px] w-full flex flex-col justify-end pb-12 px-6 text-center overflow-hidden font-roboto"
     >
         <img
-            src="/src/assets/img/hero_contact.avif"
+            src="/img/hero_contact.avif"
             alt=""
             class="absolute inset-0 w-full h-full object-cover -z-20"
         />
@@ -163,7 +163,7 @@ const reseaux = [
                             class="w-20 h-16 bg-[#111827]/50 border border-white/5 rounded-2xl flex items-center justify-center hover:bg-purple-900/20 transition-colors group"
                         >
                             <img
-                                src={`/src/assets/icons/${social.name}.svg`}
+                                src={`/icons/${social.name}.svg`}
                                 alt={social.name}
                                 class={`${social.taille} opacity-70 group-hover:opacity-100 transition-opacity`}
                             />
@@ -211,3 +211,4 @@ const reseaux = [
         filter: brightness(1.05);
     }
 </style>
+
