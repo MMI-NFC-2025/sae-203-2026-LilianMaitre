@@ -21,3 +21,21 @@ export function getImageUrl(record, filename) {
     if (!record || !filename) return "/placeholder.jpg";
     return pb.files.getURL(record, filename);
 }
+
+export async function allScenes() {
+    try {
+        const records = await pb.collection('scene').getFullList({
+            sort: 'nom_scene', // Optionnel : pour les trier par nom
+        });
+        return records;
+    } catch (error) {
+        console.error("Erreur lors de la récupération des scènes :", error);
+        return [];
+    }
+}
+
+export function getImageUrl(record, filename) {
+    // On construit l'URL de base de ton PocketBase local
+    const pbUrl = "http://127.0.0.1:8090";
+    return `${pbUrl}/api/files/${record.collectionId}/${record.id}/${filename}`;
+}
