@@ -21,7 +21,9 @@ const { titre } = Astro.props;
 			rel="stylesheet"
 		/>
 	</head>
-	<body class="bg-[#020618] text-white font-['Roboto',_sans-serif]">
+	<body
+		class="bg-[#020618] text-white font-['Roboto',_sans-serif] flex flex-col min-h-screen"
+	>
 		<Header />
 
 		<main class="flex-grow">
@@ -31,4 +33,3 @@ const { titre } = Astro.props;
 		<Footer />
 	</body>
 </html>
-

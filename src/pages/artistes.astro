@@ -2,70 +2,84 @@
 // @ts-nocheck
 import Layout from "../layouts/Layout.astro";
 import CardArtiste from "../components/CardArtiste.astro";
-import { allArtistesByDate, getImageUrl } from "../../backend/backend.mjs";
+import { allArtistesByDate } from "../../backend/backend.mjs";
 
-// On utilise la fonction de ton backend qui fait le expand de la scène
+// Récupération des données depuis PocketBase
 const artistes = await allArtistesByDate();
 ---
 
-<Layout titre="Artistes">
-    <section
-        class="relative min-h-[500px] w-full flex flex-col justify-end pb-16 px-6 text-center overflow-hidden"
-    >
-        <img
-            src="/img/artistes.avif"
-            alt=""
-            class="absolute inset-0 w-full h-full object-cover -z-20"
-        />
-        <div
-            class="absolute inset-0 bg-gradient-to-t from-[#020618] via-purple-900/40 to-transparent -z-10"
+<Layout titre="Artistes | Lumimix Festival">
+    <main class="bg-[#020618] min-h-screen">
+        {/* --- SECTION HERO (Haut de page) --- */}
+        <section
+            class="relative h-[60vh] w-full flex flex-col justify-end pb-20 px-6 text-center overflow-hidden"
         >
-        </div>
-
-        <div class="relative pt-64">
-            <h1
-                class="text-7xl font-bold tracking-tighter mb-4 font-['Roboto',_sans-serif]"
+            <img
+                src="/img/artistes.avif"
+                alt="Ambiance Festival"
+                class="absolute inset-0 w-full h-full object-cover -z-20"
+            />
+            {/* Dégradé pour la lisibilité du texte */}
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-[#020618] via-[#020618]/40 to-transparent -z-10"
             >
-                <span
-                    class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+            </div>
+
+            <div class="relative max-w-4xl mx-auto">
+                <h1
+                    class="text-6xl md:text-8xl font-black tracking-tighter mb-4 uppercase italic"
                 >
-                    Artistes
-                </span>
-            </h1>
-            <p
-                class="text-white text-lg max-w-md mx-auto opacity-90 leading-snug font-['Roboto',_sans-serif]"
-            >
-                Les plus grands DJs de la scène électronique internationale
-            </p>
-        </div>
-    </section>
+                    <span
+                        class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] bg-clip-text text-transparent"
+                    >
+                        Artistes
+                    </span>
+                </h1>
+                <p
+                    class="text-white text-xl md:text-2xl max-w-xl mx-auto opacity-90 leading-snug font-medium italic"
+                >
+                    Les plus grands DJs de la scène électronique internationale
+                    réunis pour vous.
+                </p>
+            </div>
+        </section>
 
-    <section class="px-6 pb-24 max-w-2xl mx-auto flex flex-col gap-12 mt-12">
-        {
-            artistes.length > 0 ? (
-                artistes.map((artiste) => (
-                    <CardArtiste
-                        nom={artiste.nom_artiste}
-                        style={artiste.genre_artiste}
-                        scene={
-                            artiste.expand?.scene?.nom_scene || "Scène inconnue"
-                        }
-                        date={artiste.date_presentation}
-                        horaire={artiste.horaires}
-                        image={getImageUrl(artiste, artiste.photo_artiste)}
-                    />
-                ))
-            ) : (
-                <div class="text-center py-20">
-                    <p class="text-[#90A1B9] italic">
-                        Chargement des artistes...
-                    </p>
-                    <p class="text-xs mt-2 opacity-50 text-white">
-                        Vérifie que PocketBase est lancé sur le port 8090
-                    </p>
-                </div>
-            )
-        }
-    </section>
+        {/* --- SECTION GRILLE (Le cœur de la page) --- */}
+        <section class="max-w-7xl mx-auto px-6 py-24">
+            {
+                /* justify-items-center : centre les cartes dans leurs colonnes
+                grid-cols-1/2/3 : gère le nombre de cartes selon la taille de l'écran
+            */
+            }
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center"
+            >
+                {
+                    artistes && artistes.length > 0 ? (
+                        artistes.map((artiste) => (
+                            <CardArtiste artiste={artiste} />
+                        ))
+                    ) : (
+                        <div class="col-span-full text-center py-20">
+                            <div class="inline-block p-8 bg-white/5 rounded-[2rem] border border-white/10 backdrop-blur-sm">
+                                <p class="text-[#90A1B9] text-xl italic">
+                                    Aucun artiste trouvé...
+                                </p>
+                                <p class="text-xs mt-4 opacity-50 text-white uppercase tracking-widest">
+                                    Vérifie la connexion à PocketBase (Port
+                                    8090)
+                                </p>
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
+        </section>
+    </main>
 </Layout>
 
+<style>
+    h1 {
+        font-family: "Roboto", sans-serif;
+    }
+</style>

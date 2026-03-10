@@ -1,62 +1,81 @@
 ---
-// @ts-nocheck
-const { nom, image, style, date, scene, horaire } = Astro.props;
+import { getImageUrl } from "../../backend/backend.mjs";
+
+const { artiste } = Astro.props;
+
+// Sécurité : on n'affiche rien si l'objet artiste est vide
+if (!artiste) return null;
+
+// On prépare les données d'affichage
+const d = new Date(artiste.date_presentation);
+const dateFormatee = d
+    .toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+    })
+    .replace(/^\w/, (c) => c.toUpperCase());
+const start = `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+const end = `${((d.getHours() + 2) % 24).toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+const horaire = `${start} - ${end}`;
 ---
 
 <article
-    class="bg-[#0F172B] rounded-[2rem] overflow-hidden border border-white/5 font-roboto mb-8 w-[339.33px] h-[514.25px] flex flex-col mx-auto"
+    class="relative group bg-[#121826] rounded-[2rem] overflow-hidden border border-white/5 w-full max-w-[340px] transition-all duration-300 hover:scale-[1.02] shadow-2xl"
 >
-    <div
-        class="relative w-[337.85px] h-[337.85px] mx-auto overflow-hidden rounded-t-[2rem]"
-    >
-        <img src={image} alt={nom} class="w-full h-full object-cover" />
+    <a href={`/artistes/${artiste.id}`} class="absolute inset-0 z-50"></a>
 
-        <span
-            class="absolute top-4 right-4 bg-[#A855F7] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase italic"
+    {/* IMAGE avec Badge Genre en haut à droite */}
+    <div class="relative w-full h-[320px] overflow-hidden">
+        <img
+            src={getImageUrl(artiste, artiste.photo_artiste)}
+            alt={artiste.nom_artiste}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+
+        {/* Badge Genre (Techno, House...) */}
+        <div
+            class="absolute top-4 right-4 bg-[#A855F7] text-white text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-lg"
         >
-            {style}
-        </span>
-    </div>
-    <div class="mt-2">
-        <p class="text-[#90A1B9] text-base font-mono tracking-wider opacity-80">
-            {horaire}
-        </p>
+            {artiste.genre_artiste}
+        </div>
     </div>
 
-    <div class="h-[176px] p-6 flex flex-col">
-        <h2
-            class="text-[30px] font-bold text-white tracking-tight leading-tight mb-4 truncate"
-        >
-            {nom}
+    {/* CONTENU TEXTE avec icônes */}
+    <div class="p-6 space-y-4">
+        <h2 class="text-3xl font-bold text-white tracking-tight leading-none">
+            {artiste.nom_artiste}
         </h2>
 
-        <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-3">
+        <div class="space-y-3">
+            {/* Date avec icône calendrier */}
+            <div class="flex items-center gap-2 text-[#90A1B9]">
                 <img
-                    src="/icons/caldendrier.svg"
-                    alt="Calendrier"
-                    class="w-5 h-5 shrink-0"
+                    src="/icons/calviolet.svg"
+                    alt=""
+                    class="w-4 h-4 brightness-0 invert opacity-60"
                 />
-                <span class="text-[#90A1B9] text-sm font-medium">{date}</span>
+                <span class="text-sm font-medium">{dateFormatee}</span>
             </div>
 
-            <div class="flex items-center gap-3">
+            {/* Scène avec icône localisation */}
+            <div class="flex items-center gap-2 text-[#90A1B9]">
                 <img
                     src="/icons/localisation.svg"
-                    alt="Localisation"
-                    class="w-5 h-5 shrink-0"
+                    alt=""
+                    class="w-4 h-4 brightness-0 invert opacity-60"
                 />
-                <span class="text-[#90A1B9] text-sm font-medium">{scene}</span>
+                <span class="text-sm font-medium"
+                    >{artiste.expand?.scene?.nom_scene || "Main Stage"}</span
+                >
             </div>
-        </div>
 
-        <div class="mt-4">
-            <p
-                class="text-[#90A1B9] text-lg font-mono tracking-widest opacity-70"
-            >
-                {horaire}
-            </p>
+            {/* Horaire simple */}
+            <div class="pt-1">
+                <p class="text-[#4B5563] text-sm font-bold tracking-wide">
+                    {horaire}
+                </p>
+            </div>
         </div>
     </div>
 </article>
-
