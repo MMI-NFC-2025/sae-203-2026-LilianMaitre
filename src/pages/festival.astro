@@ -122,7 +122,7 @@ const equipe = [
             Notre Charte de Valeurs
         </h2>
 
-        <div class="grid gap-10">
+        <div class="grid gap-10 md:grid-cols-2">
             {
                 valeurs.map((valeur, idx) => (
                     /* --- Effet commun + dégradé pour les 2 dernières cards --- */
@@ -167,7 +167,7 @@ const equipe = [
             expérience inoubliable
         </p>
 
-        <div class="grid gap-10">
+        <div class="grid gap-10 md:grid-cols-2">
             {
                 equipe.map((membre) => (
                     <div
@@ -216,7 +216,7 @@ const equipe = [
             Notre Mission
         </h2>
 
-        <div class="flex flex-col gap-10">
+        <div class="grid gap-10 md:grid-cols-2 md:items-start md:text-left">
             <p
                 class="text-white text-2xl md:text-3xl font-medium leading-tight"
             >
@@ -226,7 +226,7 @@ const equipe = [
             </p>
 
             <p
-                class="text-[#90A1B9] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
+                class="text-[#90A1B9] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto md:mx-0"
             >
                 Nous croyons que la musique électronique transcende les
                 frontières et unit les gens. Lumimix est plus qu'un festival —

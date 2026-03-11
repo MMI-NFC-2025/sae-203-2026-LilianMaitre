@@ -73,7 +73,11 @@ const artistesParJour = artistesDeLaScene.reduce((acc, artiste) => {
         class="bg-[#020618] min-h-screen text-white font-['Roboto',_sans-serif] pb-20"
     >
         {/* Lien retour */}
-        <div class="absolute top-24 left-6 z-[60]">
+        <a
+            href="/scenes"
+            class="group absolute top-24 left-6 z-[60]"
+            aria-label="Retour à la liste des scènes"
+        >
             <h3
                 class="text-3xl font-bold text-[#C27AFF] mb-10 tracking-tight flex items-center gap-3"
             >
@@ -101,7 +105,7 @@ const artistesParJour = artistesDeLaScene.reduce((acc, artiste) => {
                     Retour aux scènes
                 </span>
             </h3>
-        </div>
+        </a>
 
         {/* HERO */}
         <section class="relative h-[80vh] w-full overflow-hidden">

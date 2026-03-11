@@ -156,7 +156,7 @@ const faqs = [
         </div>
     </section>
 
-    <section class="px-6 py-20 max-w-2xl mx-auto font-roboto">
+    <section class="px-6 py-20 max-w-6xl mx-auto font-roboto">
         <div class="flex items-center gap-4 mb-12">
             <img
                 src="/icons/tarifs.svg"
@@ -167,7 +167,9 @@ const faqs = [
             <h2 class="text-5xl font-bold text-white tracking-tight">Tarifs</h2>
         </div>
 
-        <div class="flex flex-col gap-12 mt-16 px-4 font-roboto">
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16 px-4 font-roboto"
+        >
             {
                 tarifs.map((tarif) => (
                     <div
@@ -217,7 +219,7 @@ const faqs = [
         </div>
     </section>
 
-    <section class="px-6 pb-20 max-w-4xl mx-auto font-roboto">
+    <section class="px-6 pb-20 max-w-6xl mx-auto font-roboto">
         <div class="flex items-center gap-4 mb-10">
             <img
                 src="/icons/hebergement.svg"
@@ -230,7 +232,7 @@ const faqs = [
             </h2>
         </div>
 
-        <div class="flex flex-col gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {
                 hebergements.map((hebergement) => (
                     <div class="bg-[#0F172B] border border-white/5 rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
@@ -271,7 +273,7 @@ const faqs = [
         </div>
     </section>
 
-    <section class="px-6 pb-24 max-w-4xl mx-auto font-roboto">
+    <section class="px-6 pb-24 max-w-6xl mx-auto font-roboto">
         <div class="flex items-center gap-4 mb-10">
             <img
                 src="/icons/voiture.svg"
@@ -284,7 +286,7 @@ const faqs = [
             </h2>
         </div>
 
-        <div class="flex flex-col gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {
                 transports.map((mode) => (
                     <div
@@ -321,29 +323,27 @@ const faqs = [
         </div>
     </section>
 
-    <section class="px-6 pb-24 max-w-4xl mx-auto font-roboto">
+    <section class="px-6 pb-24 max-w-6xl mx-auto font-roboto">
         <div class="flex items-center gap-4 mb-10">
-            <img
-                src="/icons/faq.svg"
-                alt=""
-                class="w-10 h-10"
-                loading="lazy"
-            />
+            <img src="/icons/faq.svg" alt="" class="w-10 h-10" loading="lazy" />
             <h2 class="text-5xl font-bold text-white tracking-tight">FAQ</h2>
         </div>
 
-        <div class="flex flex-col gap-4">
-            {faqs.map((question) => (
-                <div class="bg-[#0F172B] border border-white/5 rounded-3xl px-5 py-4 shadow-[0_14px_40px_rgba(0,0,0,0.32)]">
-                    <div class="flex items-start justify-between gap-4">
-                        <p class="text-lg font-semibold text-white leading-snug">
-                            {question}
-                        </p>
-                        <span class="text-2xl font-bold text-[#A95CFF]">+</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {
+                faqs.map((question) => (
+                    <div class="bg-[#0F172B] border border-white/5 rounded-3xl px-5 py-4 shadow-[0_14px_40px_rgba(0,0,0,0.32)]">
+                        <div class="flex items-start justify-between gap-4">
+                            <p class="text-lg font-semibold text-white leading-snug">
+                                {question}
+                            </p>
+                            <span class="text-2xl font-bold text-[#A95CFF]">
+                                +
+                            </span>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))
+            }
         </div>
     </section>
 </Layout>
-

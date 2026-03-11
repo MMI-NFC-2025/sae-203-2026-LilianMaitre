@@ -82,7 +82,7 @@ const artistesDimanche = artistes.filter(
         </div>
     </section>
 
-    <section class="px-6 py-12 max-w-2xl mx-auto">
+    <section class="px-6 py-12 max-w-4xl mx-auto">
         <div
             class="bg-[#0F172B]/50 border border-white/5 p-8 rounded-3xl shadow-xl"
         >
@@ -138,7 +138,7 @@ const artistesDimanche = artistes.filter(
 
     <section
         id="liste-artistes"
-        class="px-6 pb-24 max-w-2xl mx-auto flex flex-col gap-12 mt-12"
+        class="px-6 pb-24 max-w-6xl mx-auto flex flex-col gap-16 mt-12"
     >
         <div class="day-group" data-jour="vendredi">
             <h2
@@ -146,17 +146,19 @@ const artistesDimanche = artistes.filter(
             >
                 Vendredi 18 <br /> Juillet
             </h2>
-            {
-                artistesVendredi.map((artiste) => (
-                    <div
-                        class="artiste-item"
-                        data-jour={getDayKey(artiste.date_presentation)}
-                        data-scene={artiste.expand?.scene?.nom_scene}
-                    >
-                        <CardArtiste artiste={artiste} />
-                    </div>
-                ))
-            }
+            <div class="artiste-grid">
+                {
+                    artistesVendredi.map((artiste) => (
+                        <div
+                            class="artiste-item"
+                            data-jour={getDayKey(artiste.date_presentation)}
+                            data-scene={artiste.expand?.scene?.nom_scene}
+                        >
+                            <CardArtiste artiste={artiste} />
+                        </div>
+                    ))
+                }
+            </div>
         </div>
 
         <div class="day-group" data-jour="samedi">
@@ -165,17 +167,19 @@ const artistesDimanche = artistes.filter(
             >
                 Samedi 19 <br /> Juillet
             </h2>
-            {
-                artistesSamedi.map((artiste) => (
-                    <div
-                        class="artiste-item"
-                        data-jour={getDayKey(artiste.date_presentation)}
-                        data-scene={artiste.expand?.scene?.nom_scene}
-                    >
-                        <CardArtiste artiste={artiste} />
-                    </div>
-                ))
-            }
+            <div class="artiste-grid">
+                {
+                    artistesSamedi.map((artiste) => (
+                        <div
+                            class="artiste-item"
+                            data-jour={getDayKey(artiste.date_presentation)}
+                            data-scene={artiste.expand?.scene?.nom_scene}
+                        >
+                            <CardArtiste artiste={artiste} />
+                        </div>
+                    ))
+                }
+            </div>
         </div>
 
         <div class="day-group" data-jour="dimanche">
@@ -184,17 +188,19 @@ const artistesDimanche = artistes.filter(
             >
                 Dimanche 20 <br /> Juillet
             </h2>
-            {
-                artistesDimanche.map((artiste) => (
-                    <div
-                        class="artiste-item"
-                        data-jour={getDayKey(artiste.date_presentation)}
-                        data-scene={artiste.expand?.scene?.nom_scene}
-                    >
-                        <CardArtiste artiste={artiste} />
-                    </div>
-                ))
-            }
+            <div class="artiste-grid">
+                {
+                    artistesDimanche.map((artiste) => (
+                        <div
+                            class="artiste-item"
+                            data-jour={getDayKey(artiste.date_presentation)}
+                            data-scene={artiste.expand?.scene?.nom_scene}
+                        >
+                            <CardArtiste artiste={artiste} />
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     </section>
 </Layout>
@@ -313,13 +319,16 @@ const artistesDimanche = artistes.filter(
     .day-group {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 36px;
+        gap: 28px;
+    }
+
+    .artiste-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
     }
 
     .artiste-item {
         width: 100%;
-        display: flex;
-        justify-content: center;
     }
 </style>
