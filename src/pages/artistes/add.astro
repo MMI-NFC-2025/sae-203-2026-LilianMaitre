@@ -1,0 +1,243 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { allScenes } from "../../../backend/backend.mjs";
+
+const scenes = await allScenes();
+---
+
+<Layout titre="Ajouter un Artiste | Admin">
+    <main class="bg-[#020618] min-h-screen text-white pt-32 pb-20 px-6">
+        <div
+            class="max-w-3xl mx-auto bg-[#0F172B] border border-white/5 p-8 md:p-12 rounded-[2.5rem] shadow-2xl"
+        >
+            <h1
+                class="text-4xl font-black uppercase tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#C27AFF] to-[#FB64B6]"
+            >
+                Nouvel Artiste
+            </h1>
+
+            <div
+                id="artistAuthPanel"
+                class="bg-[#121826] border border-white/10 rounded-2xl p-6 flex flex-col gap-4 mb-8"
+            >
+                <div class="flex items-center justify-between gap-3">
+                    <p class="text-white font-bold">Connexion requise</p>
+                    <button
+                        id="artistLogout"
+                        class="hidden text-xs uppercase font-black tracking-[0.2em] text-[#C27AFF] hover:text-white transition"
+                        type="button"
+                    >
+                        Se déconnecter
+                    </button>
+                </div>
+                <p class="text-[#90A1B9] text-sm">
+                    Connecte-toi avec ton compte PocketBase autorisé pour
+                    ajouter des artistes.
+                </p>
+                <form
+                    id="artistLoginForm"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
+                    <input
+                        id="artistEmail"
+                        type="email"
+                        required
+                        placeholder="email"
+                        class="bg-[#0D1320] border border-white/10 rounded-xl p-3 text-white focus:border-[#C27AFF] outline-none"
+                    />
+                    <input
+                        id="artistPassword"
+                        type="password"
+                        required
+                        placeholder="mot de passe"
+                        class="bg-[#0D1320] border border-white/10 rounded-xl p-3 text-white focus:border-[#C27AFF] outline-none"
+                    />
+                    <button
+                        type="submit"
+                        class="md:col-span-2 bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] text-white font-black uppercase py-3 rounded-xl hover:opacity-90"
+                    >
+                        Se connecter
+                    </button>
+                </form>
+                <p id="artistAuthStatus" class="text-xs text-[#90A1B9]"></p>
+            </div>
+
+            <form
+                id="artistForm"
+                class="grid grid-cols-1 md:grid-cols-2 gap-6"
+                enctype="multipart/form-data"
+            >
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="nom"
+                        class="text-xs font-black uppercase tracking-widest text-[#90A1B9]"
+                        >Nom de l'artiste</label
+                    >
+                    <input
+                        type="text"
+                        id="nom"
+                        name="nom_artiste"
+                        required
+                        class="bg-[#121826] border border-white/10 rounded-xl p-4 focus:border-[#C27AFF] outline-none transition-all"
+                        placeholder="ex: Charlotte de Witte"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="genre"
+                        class="text-xs font-black uppercase tracking-widest text-[#90A1B9]"
+                        >Genre Musical</label
+                    >
+                    <input
+                        type="text"
+                        id="genre"
+                        name="genre_artiste"
+                        required
+                        class="bg-[#121826] border border-white/10 rounded-xl p-4 focus:border-[#C27AFF] outline-none transition-all"
+                        placeholder="ex: Techno"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="date"
+                        class="text-xs font-black uppercase tracking-widest text-[#90A1B9]"
+                        >Date & Heure de passage</label
+                    >
+                    <input
+                        type="datetime-local"
+                        id="date"
+                        name="date_presentation"
+                        required
+                        class="bg-[#121826] border border-white/10 rounded-xl p-4 focus:border-[#C27AFF] outline-none transition-all"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="scene"
+                        class="text-xs font-black uppercase tracking-widest text-[#90A1B9]"
+                        >Scène</label
+                    >
+                    <select
+                        id="scene"
+                        name="scene"
+                        required
+                        class="bg-[#121826] border border-white/10 rounded-xl p-4 focus:border-[#C27AFF] outline-none transition-all appearance-none"
+                    >
+                        <option value="">Choisir une scène</option>
+                        {
+                            scenes.map((s) => (
+                                <option value={s.id}>{s.nom_scene}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-2 md:col-span-2">
+                    <label
+                        for="photo"
+                        class="text-xs font-black uppercase tracking-widest text-[#90A1B9]"
+                        >Photo de l'artiste</label
+                    >
+                    <input
+                        type="file"
+                        id="photo"
+                        name="photo_artiste"
+                        accept="image/*"
+                        required
+                        class="bg-[#121826] border border-white/10 rounded-xl p-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#C27AFF] file:text-white hover:file:bg-[#A855F7] cursor-pointer"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2 md:col-span-2">
+                    <label
+                        for="bio"
+                        class="text-xs font-black uppercase tracking-widest text-[#90A1B9]"
+                        >Biographie / Description</label
+                    >
+                    <textarea
+                        id="bio"
+                        name="biographie_artiste"
+                        rows="4"
+                        class="bg-[#121826] border border-white/10 rounded-xl p-4 focus:border-[#C27AFF] outline-none transition-all resize-none"
+                    ></textarea>
+                </div>
+
+                <div
+                    class="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+                >
+                    <p id="artistStatus" class="text-sm text-[#90A1B9]"></p>
+                    <button
+                        type="submit"
+                        class="bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] text-white font-black uppercase py-4 px-6 rounded-xl mt-2 md:mt-0 hover:scale-[1.02] transition-transform shadow-lg shadow-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Enregistrer l'artiste
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</Layout>
+
+<script is:inline>
+    import { pb } from "../../../backend/backend.mjs";
+
+    const form = document.getElementById("artistForm");
+    const authPanel = document.getElementById("artistAuthPanel");
+    const loginForm = document.getElementById("artistLoginForm");
+    const logoutBtn = document.getElementById("artistLogout");
+    const authStatus = document.getElementById("artistAuthStatus");
+    const status = document.getElementById("artistStatus");
+    const submitBtn = form.querySelector("button[type='submit']");
+
+    const updateAuthUI = () => {
+        const isAuth = pb.authStore.isValid;
+        form.style.display = isAuth ? "grid" : "none";
+        authPanel.classList.toggle("hidden", isAuth);
+        logoutBtn.classList.toggle("hidden", !isAuth);
+        authStatus.textContent = isAuth
+            ? "Connecté"
+            : "Connexion requise pour ajouter un artiste.";
+    };
+
+    updateAuthUI();
+
+    loginForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("artistEmail")?.value;
+        const password = document.getElementById("artistPassword")?.value;
+        authStatus.textContent = "Connexion en cours...";
+        try {
+            await pb.collection("users").authWithPassword(email, password);
+            authStatus.textContent = "Connecté";
+            updateAuthUI();
+        } catch (error) {
+            authStatus.textContent = "Erreur d'authentification";
+            console.error(error);
+        }
+    });
+
+    logoutBtn?.addEventListener("click", () => {
+        pb.authStore.clear();
+        updateAuthUI();
+    });
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        status.textContent = "Envoi en cours...";
+        submitBtn.disabled = true;
+
+        try {
+            await pb.collection("artiste").create(formData);
+            status.textContent = "Artiste ajouté avec succès !";
+            window.location.href = "/artistes";
+        } catch (error) {
+            console.error("Erreur PocketBase:", error);
+            status.textContent = "Erreur : " + (error?.message || "envoi");
+            submitBtn.disabled = false;
+        }
+    });
+</script>

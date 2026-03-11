@@ -3,6 +3,8 @@
 import Layout from "../../layouts/Layout.astro";
 import { allArtistesByDate, getImageUrl } from "../../../backend/backend.mjs";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     const artistes = await allArtistesByDate();
     return artistes.map((artiste) => ({
