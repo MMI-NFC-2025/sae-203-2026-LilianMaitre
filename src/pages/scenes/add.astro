@@ -146,11 +146,12 @@ import Layout from "../../layouts/Layout.astro";
 
     const updateAuthUI = () => {
         const isAuth = pb.authStore.isValid;
+        const email = pb.authStore.model?.email || "";
         form.style.display = isAuth ? "flex" : "none";
         authPanel.classList.toggle("hidden", isAuth);
         logoutBtn.classList.toggle("hidden", !isAuth);
         authStatus.textContent = isAuth
-            ? "Connecté"
+            ? `Connecté${email ? ` en tant que ${email}` : ""}`
             : "Connexion requise pour créer une scène.";
     };
 
@@ -162,13 +163,20 @@ import Layout from "../../layouts/Layout.astro";
         const email = document.getElementById("sceneEmail")?.value;
         const password = document.getElementById("scenePassword")?.value;
         authStatus.textContent = "Connexion en cours...";
+        loginForm.querySelectorAll("input,button").forEach((el) => {
+            el.disabled = true;
+        });
         try {
             await pb.collection("users").authWithPassword(email, password);
             authStatus.textContent = "Connecté";
             updateAuthUI();
         } catch (error) {
-            authStatus.textContent = "Erreur d'authentification";
-            console.error(error);
+            authStatus.textContent = "Identifiants incorrects";
+            console.error("Auth error (scene)", error);
+        } finally {
+            loginForm.querySelectorAll("input,button").forEach((el) => {
+                el.disabled = false;
+            });
         }
     });
 
