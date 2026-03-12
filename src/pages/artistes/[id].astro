@@ -17,6 +17,10 @@ const { id } = Astro.params;
 const artistes = await allArtistesByDate();
 const artiste = artistes.find((a) => a.id === id);
 
+if (!artiste) {
+    return Astro.redirect("/artistes");
+}
+
 // --- FONCTION UNIQUE : ON NE LA DÉCLARE QU'UNE FOIS ---
 const getPerf = (dateStr) => {
     if (!dateStr) return { date: "Bientôt", horaire: "--:--" };

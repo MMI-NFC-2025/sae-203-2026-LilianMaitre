@@ -1,8 +1,8 @@
 ---
 // @ts-nocheck
 import Layout from "../../layouts/Layout.astro";
-import CardArtiste from "../../components/CardArtiste.astro"; 
-import { allArtistesByDate, getImageUrl } from "../../../backend/backend.mjs";
+import CardArtiste from "../../components/CardArtiste.astro";
+import { allArtistesByDate } from "../../../backend/backend.mjs";
 
 const artistesBackend = await allArtistesByDate();
 ---
@@ -13,14 +13,10 @@ const artistesBackend = await allArtistesByDate();
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {
-            artistesBackend.map((artiste) => (
-                <CardArtiste
-                    id={artiste.id} 
-                    nom={artiste.nom_artiste}
-                    ...
-            />
-        ))
-    }
+                artistesBackend.map((artiste) => (
+                    <CardArtiste artiste={artiste} />
+                ))
+            }
         </div>
     </section>
 </Layout>

@@ -13,7 +13,7 @@ export const prerender = false;
 const { id } = Astro.params;
 const scene = (await allScenes()).find((s) => s.id === id);
 
-if (!scene) return Astro.redirect("/404");
+if (!scene) return Astro.redirect("/scenes");
 
 const tousLesArtistes = await allArtistesByDate();
 const artistesDeLaScene = tousLesArtistes.filter(
