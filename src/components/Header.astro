@@ -2,9 +2,9 @@
 // Code serveur (vide pour éviter les boucles d'import)
 ---
 
-<header class="fixed top-0 left-0 w-full z-[100] font-roboto">
+<header class="fixed top-0 left-0 w-full z-[100] font-roboto bg-[#020618]/90 backdrop-blur-xl border-b border-white/5" style="background-color: rgba(2,6,24,0.9);">
     <div
-        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-[120] bg-[#020618]/90 backdrop-blur-xl border-b border-white/5"
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-[120]"
     >
         <a href="/" class="transition-transform active:scale-95">
             <img
@@ -14,9 +14,24 @@
             />
         </a>
 
+        <nav
+            class="hidden md:flex items-center gap-8 text-sm font-semibold uppercase tracking-[0.18em] text-[#B7C2D9]"
+        >
+            <a href="/" class="hover:text-white transition">Accueil</a>
+            <a href="/programme" class="hover:text-white transition">Programme</a>
+            <a href="/artistes" class="hover:text-white transition">Artistes</a>
+            <a href="/scenes" class="hover:text-white transition">Scènes</a>
+            <a href="/infos" class="hover:text-white transition">Infos</a>
+            <a href="/festival" class="hover:text-white transition">Le Festival</a>
+            <a
+                href="/contact"
+                class="text-white bg-gradient-to-r from-[#C27AFF] to-[#FB64B6] px-4 py-2 rounded-full shadow-[0_0_20px_rgba(193,122,255,0.35)]"
+            >Contact</a>
+        </nav>
+
         <button
             id="menu-toggle"
-            class="text-white p-2 focus:outline-none"
+            class="text-white p-2 focus:outline-none md:hidden"
             aria-label="Menu"
         >
             <svg
