@@ -2,7 +2,6 @@
 import PocketBase from 'pocketbase';
 export const pb = new PocketBase('https://lumimix.lilian-maitre.fr/');
 
-// AJOUTE BIEN "export" ICI
 export async function allArtistesByDate() {
     try {
         const data = await pb.collection('artiste').getFullList({
@@ -16,7 +15,6 @@ export async function allArtistesByDate() {
     }
 }
 
-// Helper unique pour construire les URLs PocketBase
 export function getImageUrl(record, filename) {
     if (!record || !filename) return "/placeholder.jpg";
     try {
@@ -27,9 +25,20 @@ export function getImageUrl(record, filename) {
     }
 }
 
+export async function artisteById(id) {
+    try {
+        const record = await pb.collection('artiste').getOne(id, {
+            expand: 'scene'
+        });
+        return record;
+    } catch (error) {
+        console.error('Erreur [artisteById]', error);
+        return null;
+    }
+}
+
 export async function allScenes() {
     try {
-        // C'est ici : "scene" au lieu de "scenes"
         const records = await pb.collection('scene').getFullList();
         return records;
     } catch (error) {
@@ -37,3 +46,15 @@ export async function allScenes() {
         return [];
     }
 }
+
+export async function sceneById(id) {
+    try {
+        const record = await pb.collection('scene').getOne(id);
+        return record;
+    } catch (error) {
+        console.error('Erreur [sceneById]', error);
+        return null;
+    }
+}
+
+

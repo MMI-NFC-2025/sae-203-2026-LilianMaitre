@@ -1,5 +1,5 @@
 // Exemples simples pour verifier que les commandes PocketBase fonctionnent
-import { pb, allArtistesByDate, allScenes, getImageUrl } from './backend.mjs';
+import { pb, allArtistesByDate, allScenes, artisteById, sceneById, getImageUrl } from './backend.mjs';
 
 // Health check
 try {
@@ -38,4 +38,30 @@ try {
     }
 } catch (e) {
     console.error('Generation URL KO', e);
+}
+
+// Test artisteById
+try {
+    const artistes = await allArtistesByDate();
+    if (artistes.length > 0) {
+        const artiste = await artisteById(artistes[0].id);
+        console.log('artisteById:', JSON.stringify(artiste, null, 2));
+    } else {
+        console.log('Aucun artiste pour tester artisteById');
+    }
+} catch (e) {
+    console.error('artisteById KO', e);
+}
+
+// Test sceneById
+try {
+    const scenes = await allScenes();
+    if (scenes.length > 0) {
+        const scene = await sceneById(scenes[0].id);
+        console.log('sceneById:', JSON.stringify(scene, null, 2));
+    } else {
+        console.log('Aucune scene pour tester sceneById');
+    }
+} catch (e) {
+    console.error('sceneById KO', e);
 }
